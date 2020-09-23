@@ -23,7 +23,7 @@ db.connect((err) => {
 });
 
 const query = util.promisify(db.query).bind(db);
-global.query = query;
+global.querysql = query;
 
 // Middleware - Parser
 app.use(express.json())
@@ -31,10 +31,10 @@ app.use(express.urlencoded({extended: false}))
 
 // Public
 app.use(express.static(path.join(__dirname, 'public')));
-
+const authRoute = require('./routes/auth.route')
 // Router
-app.use(require('./routes/router'))
- 
+//app.use(require('./routes/router'))
+ app.use('/api/auth', authRoute)
 // Listen
 app.listen(port, () => {
   console.log(`Tourne sur le port : ${port}`);
